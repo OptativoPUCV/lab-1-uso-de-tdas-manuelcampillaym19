@@ -57,8 +57,15 @@ Ejercicio 2.
 Crea una función que reciba una lista de enteros (int*) y 
 retorne la suma de sus elementos.
 */
+
 int sumaLista(List *L) {
-   return 0;
+    int suma = 0;
+    int* dato = (int*) first(L);
+    while(dato != NULL) {
+        suma += *dato;
+        dato = (int*) next(L);
+    }
+    return suma;
 }
 
 /*
@@ -70,8 +77,16 @@ Asume que popCurrent luego de eliminar un elemento se
 posiciona en el elemento anterior.
 */
 
-void eliminaElementos(List*L, int elem){
-
+void eliminaElementos(List* L, int elem) {
+    int* dato = (int*) first(L);
+    while(dato != NULL) {
+        if (*dato == elem) {
+            free(popCurrent(L));
+            dato = (int*) first(L); // popCurrent mueve al anterior, reiniciamos
+        } else {
+            dato = (int*) next(L);
+        }
+    }
 }
 
 /*
@@ -82,6 +97,15 @@ Puedes usar una pila auxiliar.
 */
 
 void copia_pila(Stack* P1, Stack* P2) {
+    Stack* aux = create_stack();
+    void* dato;
+    while ((dato = pop(P1)) != NULL) {
+        push(aux, dato);
+    }
+    while ((dato = pop(aux)) != NULL) {
+        push(P1, dato);
+        push(P2, dato);
+    }
 }
 
 /*
@@ -92,6 +116,23 @@ paraéntesis balanceados. Retorna 1 si están balanceados,
 */
 
 int parentesisBalanceados(char *cadena) {
-   return 0;
+    Stack* s = create_stack();
+    for(int i = 0; cadena[i] != '\0'; i++) {
+        char c = cadena[i];
+        if(c == '(' || c == '[' || c == '{') {
+            push(s, &cadena[i]); // solo guardamos dirección, no necesitamos valor exacto
+        } else if(c == ')' || c == ']' || c == '}') {
+            char* topChar = (char*)top(s);
+            if(topChar == NULL) return 0;
+            if((*topChar == '(' && c == ')') ||
+               (*topChar == '[' && c == ']') ||
+               (*topChar == '{' && c == '}')) {
+                pop(s);
+            } else {
+                return 0;
+            }
+        }
+    }
+    return top(s) == NULL;
 }
 

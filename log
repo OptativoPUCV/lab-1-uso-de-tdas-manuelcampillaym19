@@ -4,3 +4,9 @@ do., 17 de ago. de 2025 12:28:53:
  tests:  1|4
 total_score: 10/70
 3f6cb15
+do., 17 de ago. de 2025 12:33:01: 
+ exercises.c | 45 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
+ tests:  9|0
+total_score: 70/70
+7b984bc
